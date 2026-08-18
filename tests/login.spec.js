@@ -43,3 +43,5 @@ usersData.forEach((user, index) => {
 
 });
 //npx playwright test --grep "@smoke"
+
+// Login test branch practice
