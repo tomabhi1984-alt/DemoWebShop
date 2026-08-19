@@ -1,4 +1,4 @@
-import GenricUtils from "../utils/genricUtils";
+import GenricUtils from "../utils/GenricUtils"
 import users from "../test-data/users.json"
 
 export default class RegisterPage {
