@@ -35,40 +35,60 @@ export default class CartPage {
         );
     }
 
+
     // Open Shopping Cart
     async openCart() {
 
-        await this.generic.clickOnElement(
-            this.shoppingCartLink
-        );
+        await this.shoppingCartLink.waitFor({
+            state: "visible"
+        });
 
-        await this.page.waitForLoadState(
-            "domcontentloaded"
+        await this.shoppingCartLink.click();
+
+        await this.page.waitForURL("**/cart");
+
+        console.log(
+            "Cart opened:",
+            this.page.url()
         );
     }
 
+
     // Get Product Name
     async getProductName() {
+
+        await this.productName.waitFor({
+            state: "visible"
+        });
 
         return await this.generic.getText(
             this.productName
         );
     }
 
+
     // Get Product Quantity
     async getQuantity() {
 
-        console.log("Current URL:", this.page.url());
+        console.log(
+            "Current URL:",
+            this.page.url()
+        );
 
         console.log(
             "Quantity count:",
             await this.quantity.count()
         );
 
+        await this.quantity.waitFor({
+            state: "visible"
+        });
+
         return await this.generic.getInputValue(
             this.quantity
         );
     }
+
 
     // Accept Terms of Service
     async acceptTermsOfService() {
@@ -78,6 +98,7 @@ export default class CartPage {
         );
     }
 
+
     // Checkout
     async clickCheckout() {
 
@@ -86,27 +107,42 @@ export default class CartPage {
         );
     }
 
+
     // Clear Cart
     async clearCart() {
 
-    await this.page.waitForLoadState("domcontentloaded");
-
-    const count = await this.removeProduct.count();
-
-    console.log("Remove product count:", count);
-    console.log("Current URL:", this.page.url());
-
-    if (count > 0) {
-
-        for (let i = 0; i < count; i++) {
-            await this.removeProduct.nth(i).check();
-        }
-
-        await this.generic.clickOnElement(
-            this.updateCartButton
+        await this.page.waitForLoadState(
+            "domcontentloaded"
         );
 
-        await this.page.waitForLoadState("domcontentloaded");
+        const count = await this.removeProduct.count();
+
+        console.log(
+            "Remove product count:",
+            count
+        );
+
+        console.log(
+            "Current URL:",
+            this.page.url()
+        );
+
+        if (count > 0) {
+
+            for (let i = 0; i < count; i++) {
+
+                await this.removeProduct
+                    .nth(i)
+                    .check();
+            }
+
+            await this.generic.clickOnElement(
+                this.updateCartButton
+            );
+
+            await this.page.waitForLoadState(
+                "domcontentloaded"
+            );
+        }
     }
-}
 }
