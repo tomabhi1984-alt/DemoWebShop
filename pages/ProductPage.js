@@ -1,4 +1,4 @@
-import GenricUtils from "../utils/genricUtils";
+import GenricUtils from "../utils/GenricUtils";
 
 export default class ProductPage {
 
