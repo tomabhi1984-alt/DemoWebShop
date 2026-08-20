@@ -5,7 +5,7 @@ import { test, expect } from "../fixtures/testFixture";
 import ExcelUtility from "../utils/ExcelUtility";
 
 // Excel Utility
-const excel = new ExcelUtility("./test-data/Testdata.xlsx");
+const excel = new ExcelUtility("./test-data/TestData.xlsx");
 const usersData = excel.getSheetData("Users");
 
 // Before Each

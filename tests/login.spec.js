@@ -2,7 +2,7 @@ import { test, expect } from "../fixtures/testFixture";
 import users from "../test-data/users.json";
 import ExcelUtility from "../utils/ExcelUtility";
 
-const excel = new ExcelUtility("./test-data/Testdata.xlsx");
+const excel = new ExcelUtility("./test-data/TestData.xlsx");
 const usersData = excel.getSheetData("Users");
 
 
@@ -43,3 +43,5 @@ usersData.forEach((user, index) => {
 
 });
 //npx playwright test --grep "@smoke"
+
+// Login test branch practice
