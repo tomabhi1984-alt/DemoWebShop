@@ -15,7 +15,6 @@ export default class CartPage {
 
         this.productName = page.locator(".product-name").first();
 
-        // Cart quantity
         this.quantity = page.locator(
             ".cart-item-row .qty-input"
         ).first();
@@ -45,11 +44,37 @@ export default class CartPage {
 
         await this.shoppingCartLink.click();
 
-        await this.page.waitForURL("**/cart");
+        await this.page.waitForLoadState("domcontentloaded");
 
-        console.log(
-            "Cart opened:",
-            this.page.url()
+        // Verify we are really on the cart page.
+        // Retry opening cart if the website redirects to home page.
+        for (let attempt = 1; attempt <= 3; attempt++) {
+
+            if (this.page.url().includes("/cart")) {
+
+                console.log(
+                    "Cart opened:",
+                    this.page.url()
+                );
+
+                return;
+            }
+
+            console.log(
+                `Cart redirect detected. Retrying... Attempt ${attempt}`
+            );
+
+            await this.page.waitForTimeout(1000);
+
+            await this.shoppingCartLink.click();
+
+            await this.page.waitForLoadState(
+                "domcontentloaded"
+            );
+        }
+
+        throw new Error(
+            `Unable to stay on cart page. Current URL: ${this.page.url()}`
         );
     }
 
