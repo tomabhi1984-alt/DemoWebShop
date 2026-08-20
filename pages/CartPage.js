@@ -123,8 +123,8 @@ export default class CartPage {
         );
     }
 
-
-    // Checkout
+    // Navigate to checkout page
+    // Click Checkout button to proceed to checkout page
     async clickCheckout() {
 
         await this.generic.clickOnElement(
