@@ -38,17 +38,17 @@ export default class CartPage {
     // Open Shopping Cart
     async openCart() {
 
-        await this.shoppingCartLink.waitFor({
-            state: "visible"
-        });
-
-        await this.shoppingCartLink.click();
-
-        await this.page.waitForLoadState("domcontentloaded");
-
-        // Verify we are really on the cart page.
-        // Retry opening cart if the website redirects to home page.
         for (let attempt = 1; attempt <= 3; attempt++) {
+
+            console.log(`Opening cart... Attempt ${attempt}`);
+
+            await this.shoppingCartLink.waitFor({
+                state: "visible"
+            });
+
+            await this.shoppingCartLink.click();
+
+            await this.page.waitForLoadState("domcontentloaded");
 
             if (this.page.url().includes("/cart")) {
 
@@ -61,20 +61,14 @@ export default class CartPage {
             }
 
             console.log(
-                `Cart redirect detected. Retrying... Attempt ${attempt}`
+                `Cart redirect detected. Current URL: ${this.page.url()}`
             );
 
             await this.page.waitForTimeout(1000);
-
-            await this.shoppingCartLink.click();
-
-            await this.page.waitForLoadState(
-                "domcontentloaded"
-            );
         }
 
         throw new Error(
-            `Unable to stay on cart page. Current URL: ${this.page.url()}`
+            `Unable to open cart. Current URL: ${this.page.url()}`
         );
     }
 
@@ -122,6 +116,7 @@ export default class CartPage {
             this.termServiceBox
         );
     }
+
 
     // Navigate to checkout page
     // Click Checkout button to proceed to checkout page
