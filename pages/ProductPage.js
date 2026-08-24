@@ -12,7 +12,7 @@ export default class ProductPage {
         });
     }
 
-
+// Product test practice
     async clickBuildYourOwnComputer(){
         await this.buildYourOwnComputer.waitFor({
             state:"visible"
